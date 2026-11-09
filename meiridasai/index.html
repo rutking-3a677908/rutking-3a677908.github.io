@@ -1,0 +1,1913 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日大赛yandex免费在线观看 - 赛事日程与作品聚合</title>
+  <meta name="description" content="每日大赛yandex免费在线观看，聚合每日创意大赛、编程挑战与设计竞赛的日程、作品与分类入口，适合关注线上赛事的创作者与观众查阅。">
+  <meta name="keywords" content="创意赛事日程, 编程挑战作品, 设计竞赛分类, 在线赛事聚合, 每日更新">
+  <style>
+    /* 全局色彩与变量系统 */
+    :root {
+      --bg: #f7f9fc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --accent-dark: #1e3a8a;
+      --highlight: #f59e0b;
+      --highlight-soft: #fef3c7;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.03);
+      --shadow-sticky: 0 4px 16px rgba(0,0,0,0.06);
+      --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+      --header-height: 68px;
+      --announce-height: 44px;
+      --sticky-offset: calc(var(--header-height) + var(--announce-height));
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--sticky-offset);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-top: var(--sticky-offset);
+    }
+
+    /* 吸顶公告条 + 吸顶页头 */
+    .sticky-group {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--bg);
+      transition: box-shadow 0.2s;
+    }
+
+    .sticky-group.scrolled {
+      box-shadow: var(--shadow-sticky);
+    }
+
+    .announce-bar {
+      background: var(--accent-dark);
+      color: #fff;
+      height: var(--announce-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      padding: 0 1rem;
+      text-align: center;
+    }
+
+    .announce-bar a {
+      color: #fff;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 0.5rem;
+      font-weight: 600;
+    }
+
+    .page-header {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+    }
+
+    .header-inner {
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+      text-decoration: none;
+      color: inherit;
+      font-weight: 700;
+    }
+
+    .brand-graphic {
+      width: 34px;
+      height: 34px;
+      display: block;
+    }
+
+    .brand-text {
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .header-nav a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .header-nav a:hover {
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+    }
+
+    .header-cta {
+      display: flex;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .header-cta .search-mini {
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      gap: 0.4rem;
+    }
+
+    .header-cta .search-mini input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.82rem;
+      width: 110px;
+      color: var(--text-primary);
+    }
+
+    .header-cta .search-mini input::placeholder {
+      color: #94a3b8;
+    }
+
+    /* 主容器 */
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* 首屏 */
+    .hero {
+      margin: 2rem 0 2.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, #f1f5fd 100%);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.2rem 0.8rem;
+      border-radius: 999px;
+      letter-spacing: 0.3px;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 0.9rem;
+      font-weight: 800;
+      word-break: break-word;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      transition: background 0.15s, transform 0.1s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: transparent;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      transition: background 0.15s, border-color 0.15s;
+      cursor: pointer;
+    }
+
+    .btn-outline:hover {
+      background: var(--surface);
+      border-color: #94a3b8;
+    }
+
+    .hero-visual {
+      flex-shrink: 0;
+      width: 200px;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 8px 16px rgba(37,99,235,0.12));
+    }
+
+    /* 三栏布局 */
+    .layout-three-col {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr) 280px;
+      gap: 2rem;
+      align-items: start;
+      padding-bottom: 3rem;
+    }
+
+    /* 左频道索引 */
+    .channel-sidebar {
+      position: sticky;
+      top: var(--sticky-offset);
+      padding-top: 0.5rem;
+    }
+
+    .channel-sidebar h2 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .channel-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .channel-nav a {
+      display: block;
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .channel-nav a:hover,
+    .channel-nav a.active {
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+    }
+
+    /* 中主内容 */
+    .main-content {
+      min-width: 0;
+    }
+
+    /* 右辅助栏 */
+    .aux-sidebar {
+      position: sticky;
+      top: var(--sticky-offset);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding-top: 0.5rem;
+    }
+
+    .aux-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .aux-card h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .hot-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .hot-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+    }
+
+    .hot-list .rank {
+      font-weight: 700;
+      color: var(--highlight);
+      min-width: 1.2rem;
+      font-size: 0.8rem;
+    }
+
+    .hot-list a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      transition: color 0.15s;
+      line-height: 1.4;
+    }
+
+    .hot-list a:hover {
+      color: var(--accent);
+    }
+
+    .update-stream {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .update-stream li {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .update-stream li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .update-stream .time {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    /* 板块通用样式 */
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .section-more {
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .section-more:hover {
+      text-decoration: underline;
+    }
+
+    /* 概览段落 */
+    .overview-text {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1.6rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .overview-text p {
+      margin-bottom: 0.8rem;
+    }
+
+    .overview-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 精选卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-item:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #eef2f6;
+      display: block;
+    }
+
+    .card-body {
+      padding: 1rem 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .tag-accent {
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+    }
+
+    .tag-highlight {
+      background: var(--highlight-soft);
+      color: #92400e;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding-top: 0.35rem;
+      border-top: 1px solid #f1f5f9;
+      margin-top: 0.25rem;
+    }
+
+    .card-meta .score {
+      font-weight: 700;
+      color: var(--highlight);
+    }
+
+    /* 最新动态紧凑列表 */
+    .update-list {
+      list-style: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .update-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.9rem;
+      transition: background 0.15s;
+    }
+
+    .update-list li:last-child {
+      border-bottom: none;
+    }
+
+    .update-list li:hover {
+      background: #fafcff;
+    }
+
+    .update-list .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .update-list .content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .update-list .item-title {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .update-list .item-summary {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .update-list .time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    /* 分类入口 */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .category-chip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      text-align: center;
+    }
+
+    .category-chip:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent-dark);
+    }
+
+    /* 深度解析 */
+    .deep-dive {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2rem 2rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .deep-dive h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 1.5rem 0 0.6rem;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .deep-dive h3:first-of-type {
+      margin-top: 0;
+    }
+
+    .deep-dive p {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 0.8rem;
+    }
+
+    .deep-dive ul {
+      margin: 0.5rem 0 1rem 1.2rem;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .deep-dive li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* 体验指南 */
+    .guide-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .step-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--text-primary);
+    }
+
+    .step-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .faq-list details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1.1rem;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.15s;
+    }
+
+    .faq-list details[open] {
+      background: #fafcff;
+    }
+
+    .faq-list summary {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .faq-list summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-list summary::after {
+      content: '+';
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .faq-list details[open] summary::after {
+      content: '−';
+    }
+
+    .faq-list .faq-answer {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-top: 0.7rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    /* 用户评论 */
+    .comment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.85rem;
+    }
+
+    .comment-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .comment-user {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-soft), #c7d2fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+      flex-shrink: 0;
+    }
+
+    .comment-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .comment-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .comment-meta {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    /* 相关资讯 */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1rem;
+      box-shadow: var(--shadow-sm);
+      align-items: flex-start;
+    }
+
+    .news-img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+      background: #eef2f6;
+    }
+
+    .news-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .news-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    .news-summary {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+      line-height: 1.5;
+    }
+
+    .news-date {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* 相关推荐标签索引 */
+    .tag-index {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag-index a {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .tag-index a:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent-dark);
+    }
+
+    /* 补充板块：榜单时间线 */
+    .timeline {
+      list-style: none;
+      position: relative;
+      padding-left: 1.4rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline li {
+      position: relative;
+      padding-bottom: 1rem;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .timeline li:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline li::before {
+      content: '';
+      position: absolute;
+      left: -1.4rem;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--surface);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .timeline .tl-date {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 0.1rem;
+    }
+
+    .timeline .tl-title {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* 页尾 */
+    .page-footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 2.5rem 0 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      max-width: 320px;
+    }
+
+    .footer-brand .brand-text {
+      color: #fff;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-col h4 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.82rem;
+      color: #94a3b8;
+      text-decoration: none;
+      margin-bottom: 0.35rem;
+      transition: color 0.15s;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #1e293b;
+      padding-top: 1rem;
+      font-size: 0.75rem;
+      color: #64748b;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .layout-three-col {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .channel-sidebar {
+        position: static;
+        order: -1;
+      }
+
+      .channel-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+
+      .channel-nav a {
+        padding: 0.35rem 0.9rem;
+        font-size: 0.85rem;
+      }
+
+      .aux-sidebar {
+        position: static;
+        order: 2;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+      }
+
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.8rem 1.5rem;
+        gap: 1.5rem;
+      }
+
+      .hero-visual {
+        width: 140px;
+        height: 110px;
+        align-self: center;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .header-nav {
+        display: none;
+      }
+
+      .header-cta .search-mini {
+        display: none;
+      }
+    }
+
+    @media (max-width: 740px) {
+      .container {
+        padding: 0 1rem;
+      }
+
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+
+      .hero-desc {
+        font-size: 0.9rem;
+      }
+
+      .section-title {
+        font-size: 1.15rem;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .comment-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-links {
+        gap: 1.5rem;
+      }
+
+      .news-item {
+        flex-direction: column;
+      }
+
+      .news-img {
+        width: 100%;
+        height: 120px;
+      }
+
+      .deep-dive {
+        padding: 1.2rem 1rem;
+      }
+    }
+
+    /* 滚动偏移与锚点 */
+    [id] {
+      scroll-margin-top: var(--sticky-offset);
+    }
+
+    /* 无结果反馈 */
+    .no-results {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      padding: 1rem;
+      text-align: center;
+      display: none;
+    }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+  <!-- 吸顶组合：公告条 + 页头 -->
+  <div class="sticky-group" id="stickyGroup">
+    <div class="announce-bar">
+      本周新增 12 场赛事日程，11 月 8 日更新 · <a href="/#latest">查看全部</a>
+    </div>
+    <header class="page-header">
+      <div class="header-inner">
+        <a href="/" class="brand" aria-label="每日大赛yandex免费在线观看 首页">
+          <svg class="brand-graphic" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="40" height="40" rx="10" fill="#2563EB"/>
+            <path d="M12 14L20 28L28 14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="20" cy="11" r="2.5" fill="#F59E0B"/>
+          </svg>
+          <span class="brand-text">每日大赛yandex免费在线观看</span>
+        </a>
+        <nav class="header-nav" aria-label="主题导航">
+          <a href="/#overview">赛事概览</a>
+          <a href="/#featured">精选作品</a>
+          <a href="/#latest">最新动态</a>
+          <a href="/#categories">分类入口</a>
+          <a href="/#deep-dive">深度解析</a>
+          <a href="/#faq">常见问答</a>
+          <a href="/#comments">用户评论</a>
+        </nav>
+        <div class="header-cta">
+          <div class="search-mini">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="searchInput" placeholder="搜索赛事或作品…" aria-label="搜索赛事或作品">
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- 主容器 -->
+  <div class="container">
+
+    <!-- 首屏 -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <span class="hero-badge">2026 年 11 月 8 日 · 每日更新</span>
+        <h1>每日大赛yandex免费在线观看</h1>
+        <p class="hero-desc">
+          聚合每日创意大赛、编程挑战与设计竞赛的日程入口，收录近期热门赛题、晋级作品与分类标签，为创作者和观众提供清晰的赛事浏览路径。
+        </p>
+        <div class="hero-actions">
+          <a href="/#latest" class="btn-primary">查看今日更新</a>
+          <a href="/#categories" class="btn-outline">浏览分类</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="20" y="30" width="160" height="110" rx="12" fill="white" stroke="#E2E8F0" stroke-width="1.5"/>
+          <rect x="20" y="30" width="160" height="28" rx="12" fill="#DBEAFE"/>
+          <circle cx="36" cy="44" r="4" fill="#2563EB"/>
+          <circle cx="50" cy="44" r="4" fill="#93C5FD"/>
+          <circle cx="64" cy="44" r="4" fill="#BFDBFE"/>
+          <rect x="34" y="70" width="60" height="8" rx="4" fill="#E2E8F0"/>
+          <rect x="34" y="86" width="100" height="6" rx="3" fill="#F1F5F9"/>
+          <rect x="34" y="98" width="80" height="6" rx="3" fill="#F1F5F9"/>
+          <rect x="34" y="114" width="36" height="14" rx="7" fill="#2563EB"/>
+          <rect x="78" y="114" width="36" height="14" rx="7" fill="#DBEAFE"/>
+          <circle cx="155" cy="85" r="18" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+          <path d="M148 85L153 90L162 80" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 三栏布局 -->
+    <div class="layout-three-col">
+
+      <!-- 左频道索引 -->
+      <aside class="channel-sidebar">
+        <h2>频道索引</h2>
+        <nav class="channel-nav" aria-label="频道索引">
+          <a href="/#overview">赛事概览</a>
+          <a href="/#featured">精选作品</a>
+          <a href="/#latest">最新动态</a>
+          <a href="/#categories">分类入口</a>
+          <a href="/#deep-dive">深度解析</a>
+          <a href="/#guide">体验指南</a>
+          <a href="/#faq">常见问答</a>
+          <a href="/#comments">用户评论</a>
+          <a href="/#news">相关资讯</a>
+          <a href="/#related">相关推荐</a>
+          <a href="/#timeline">赛事时间线</a>
+        </nav>
+      </aside>
+
+      <!-- 中主内容 -->
+      <main class="main-content" id="mainContent">
+
+        <!-- 1. 主题领域概览 -->
+        <section class="section" id="overview">
+          <div class="section-header">
+            <h2 class="section-title">赛事领域概览</h2>
+          </div>
+          <div class="overview-text">
+            <p>
+              每日大赛yandex免费在线观看所指向的内容领域，主要覆盖线上创意赛事、编程挑战、设计竞赛与短视频创作赛。每天有来自不同平台的赛题发布，参赛者围绕指定主题提交作品，观众则可以浏览往期晋级作品与实时排名。
+            </p>
+            <p>
+              当前值得关注的几个方向包括：限时 24 小时的创意命题赛、持续一周的编程马拉松、以视觉传达为核心的海报设计赛，以及面向开发者的算法挑战。这些赛事通常设有公开作品展示区，部分还会提供评分细则和评委点评，方便观摩学习。
+            </p>
+            <p>
+              对于初次接触的观众，可以从“今日更新”中的具体赛题入手，先了解赛制与作品风格，再通过分类入口找到自己感兴趣的垂类。创作者则更关注截止时间、提交格式和评审维度。
+            </p>
+          </div>
+        </section>
+
+        <!-- 2. 精选内容推荐 -->
+        <section class="section" id="featured">
+          <div class="section-header">
+            <h2 class="section-title">精选内容推荐</h2>
+            <a href="/#latest" class="section-more">更多更新 →</a>
+          </div>
+          <div class="card-grid">
+            <article class="card-item">
+              <img class="card-img" src="https://picsum.photos/seed/daily-race01/400/300" width="400" height="300" alt="24小时创意命题赛作品封面" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">24小时创意命题赛「城市呼吸」</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">创意命题</span>
+                  <span class="tag">限时赛</span>
+                  <span class="tag">视觉设计</span>
+                </div>
+                <p class="card-desc">围绕城市空气与公共空间展开，参赛者需在24小时内提交一组三张视觉海报，当前展示的是入围作品《雾中信号塔》。</p>
+                <div class="card-meta"><span>热度 9.2</span><span class="score">评分 8.7</span></div>
+              </div>
+            </article>
+
+            <article class="card-item">
+              <img class="card-img" src="https://picsum.photos/seed/daily-code02/400/300" width="400" height="300" alt="算法周赛第47期题目界面" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">算法周赛第47期「滑动窗口极值」</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">编程挑战</span>
+                  <span class="tag">算法</span>
+                  <span class="tag">周赛</span>
+                </div>
+                <p class="card-desc">本期题目聚焦单调队列与滑动窗口，提供六道不同难度赛题，适合准备面试或提升数据结构能力的开发者。</p>
+                <div class="card-meta"><span>参与 2.1k</span><span class="score">难度 中等</span></div>
+              </div>
+            </article>
+
+            <article class="card-item">
+              <img class="card-img" src="https://picsum.photos/seed/daily-poster03/400/300" width="400" height="300" alt="公益海报设计赛获奖作品" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">公益海报设计赛「无声的河流」</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">设计竞赛</span>
+                  <span class="tag">公益</span>
+                  <span class="tag">平面设计</span>
+                </div>
+                <p class="card-desc">以水污染为主题，收到来自各地设计师的 300 余份作品，金奖作品用极简线条表现河流的沉默状态。</p>
+                <div class="card-meta"><span>作品 312</span><span class="score">金奖 1 名</span></div>
+              </div>
+            </article>
+
+            <article class="card-item">
+              <img class="card-img" src="https://picsum.photos/seed/daily-video04/400/300" width="400" height="300" alt="短视频创作赛拍摄花絮" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">短视频创作赛「一分钟日常」</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">短视频</span>
+                  <span class="tag">生活记录</span>
+                  <span class="tag">创作赛</span>
+                </div>
+                <p class="card-desc">要求用一分钟镜头记录一个日常瞬间，评审关注叙事节奏与画面质感。目前排名第一的作品拍摄了清晨早餐摊的十分钟。</p>
+                <div class="card-meta"><span>播放 8.4k</span><span class="score">评分 9.0</span></div>
+              </div>
+            </article>
+
+            <article class="card-item">
+              <img class="card-img" src="https://picsum.photos/seed/daily-ui05/400/300" width="400" height="300" alt="界面设计挑战作品展示" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">界面设计挑战「旅行记账」</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">UI 设计</span>
+                  <span class="tag">移动端</span>
+                  <span class="tag">挑战赛</span>
+                </div>
+                <p class="card-desc">参赛者需为旅行场景设计一款轻量记账工具，重点考察信息层级与手势交互。其中一组作品用地图联动账单获得高分。</p>
+                <div class="card-meta"><span>提交 89</span><span class="score">评分 8.5</span></div>
+              </div>
+            </article>
+
+            <article class="card-item">
+              <img class="card-img" src="https://picsum.photos/seed/daily-data06/400/300" width="400" height="300" alt="数据可视化竞赛图表" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">数据可视化竞赛「城市温度」</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">数据可视化</span>
+                  <span class="tag">图表</span>
+                  <span class="tag">分析</span>
+                </div>
+                <p class="card-desc">基于公开气象数据，用可视化方式呈现近十年城市热岛变化。交互式作品《热浪地图》允许用户拖动时间轴查看。</p>
+                <div class="card-meta"><span>作品 56</span><span class="score">评分 8.9</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 3. 最新更新 / 动态 -->
+        <section class="section" id="latest">
+          <div class="section-header">
+            <h2 class="section-title">最新更新与动态</h2>
+          </div>
+          <ul class="update-list">
+            <li>
+              <span class="dot"></span>
+              <div class="content">
+                <span class="item-title">算法周赛第47期成绩公布</span>
+                <span class="item-summary">前三名分别用时 18 分 32 秒、21 分 05 秒、24 分 11 秒，题目解析已上传。</span>
+              </div>
+              <span class="time">今天 09:30</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div class="content">
+                <span class="item-title">公益海报设计赛「无声的河流」作品展开启</span>
+                <span class="item-summary">312 份作品进入公开展示阶段，线上投票截止到 11 月 12 日。</span>
+              </div>
+              <span class="time">今天 08:15</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div class="content">
+                <span class="item-title">短视频创作赛新赛题「一分钟日常」上线</span>
+                <span class="item-summary">本期要求用连续镜头记录一个生活瞬间，禁止剪辑拼接，提交截止 11 月 10 日。</span>
+              </div>
+              <span class="time">昨天 21:10</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div class="content">
+                <span class="item-title">24小时创意命题赛「城市呼吸」入围名单公布</span>
+                <span class="item-summary">共 18 组作品进入终评，其中《雾中信号塔》《呼吸缝隙》暂列前二。</span>
+              </div>
+              <span class="time">昨天 18:40</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div class="content">
+                <span class="item-title">界面设计挑战「旅行记账」新增评审维度</span>
+                <span class="item-summary">本期增加“无障碍设计”评分项，占比 10%，已提交作品可补充说明。</span>
+              </div>
+              <span class="time">11 月 6 日</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div class="content">
+                <span class="item-title">数据可视化竞赛数据集更新</span>
+                <span class="item-summary">新增 2025 年城市气温月度数据，参赛者可使用最新数据重新生成图表。</span>
+              </div>
+              <span class="time">11 月 5 日</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div class="content">
+                <span class="item-title">编程马拉松「开放数据应用」报名开启</span>
+                <span class="item-summary">为期 48 小时，主题为公共交通数据再利用，组队上限 4 人，报名截止 11 月 9 日。</span>
+              </div>
+              <span class="time">11 月 4 日</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <div class="content">
+                <span class="item-title">海报设计赛「无声的河流」评委点评上线</span>
+                <span class="item-summary">三位评委分别从概念、执行、传播性角度点评了 8 组作品，文字版已整理发布。</span>
+              </div>
+              <span class="time">11 月 3 日</span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- 4. 分类入口 -->
+        <section class="section" id="categories">
+          <div class="section-header">
+            <h2 class="section-title">分类入口</h2>
+          </div>
+          <div class="category-grid">
+            <a href="/#featured" class="category-chip">创意命题</a>
+            <a href="/#featured" class="category-chip">编程挑战</a>
+            <a href="/#featured" class="category-chip">设计竞赛</a>
+            <a href="/#featured" class="category-chip">短视频创作</a>
+            <a href="/#featured" class="category-chip">UI 设计</a>
+            <a href="/#featured" class="category-chip">数据可视化</a>
+            <a href="/#featured" class="category-chip">算法周赛</a>
+            <a href="/#featured" class="category-chip">公益海报</a>
+          </div>
+        </section>
+
+        <!-- 5. 深度解析正文 -->
+        <section class="section" id="deep-dive">
+          <div class="section-header">
+            <h2 class="section-title">深度解析：赛事类型与评判维度</h2>
+          </div>
+          <div class="deep-dive">
+            <h3>限时创意赛 vs 长周期设计赛</h3>
+            <p>
+              限时创意赛通常要求在 24 至 48 小时内完成作品，强调快速构思与执行力。这类赛事的评判更看重概念的新鲜度和完成度之间的平衡。长周期设计赛则给予 1 至 3 周时间，允许反复打磨，评审会深入考察细节、系统性和落地可能性。对于观众而言，限时赛的作品往往更具实验性，长周期赛的作品更接近成熟项目。
+            </p>
+
+            <h3>编程挑战的难度分层与晋级机制</h3>
+            <p>
+              编程类赛事一般按题目难度分为入门、普及、提高三个层级。入门题考察基础语法与简单逻辑，普及题涉及常用数据结构，提高题则要求算法优化与边界处理。多数周赛采用积分制，前 10% 获得晋级资格。部分赛事还设有“最快解题奖”，奖励用时最短的参赛者。
+            </p>
+            <ul>
+              <li><strong>入门层级</strong>：适合刚接触编程的学习者，通常 3 至 4 道题，完赛率较高。</li>
+              <li><strong>普及层级</strong>：需要掌握排序、查找、简单动态规划，是多数参赛者的主战场。</li>
+              <li><strong>提高层级</strong>：涉及图论、高级数据结构，往往只有少数人能完整解答。</li>
+            </ul>
+
+            <h3>视觉设计类赛事的评分标准</h3>
+            <p>
+              海报、UI、短视频等视觉类赛事的评分通常包含四个维度：主题契合度、视觉表现力、创新性、完成度。主题契合度占 30% 左右，要求作品直接回应赛题；视觉表现力考察构图、色彩、字体等基本功；创新性鼓励突破常规；完成度则关注细节是否到位。部分赛事还会加入公众投票，但权重一般不超过 20%。
+            </p>
+
+            <h3>如何判断一个赛题是否适合自己</h3>
+            <p>
+              可以从三个角度快速评估：第一，看赛题描述中的关键词是否与自己的技能栈匹配，例如“滑动窗口”对应算法，“海报”对应平面设计；第二，看时间要求，限时赛适合有整块时间且抗压能力强的参赛者；第三，看评审维度，如果某个赛事特别看重“落地性”，那么偏概念化的作品可能得分不高。
+            </p>
+          </div>
+        </section>
+
+        <!-- 6. 体验指南 / 消费路径 -->
+        <section class="section" id="guide">
+          <div class="section-header">
+            <h2 class="section-title">体验指南：如何浏览与判断赛事内容</h2>
+          </div>
+          <div class="guide-steps">
+            <div class="step-card">
+              <span class="step-number">1</span>
+              <h4>从赛题类型切入</h4>
+              <p>先确定自己关注的是创意命题、编程挑战还是视觉设计。不同赛题的作品形态差异很大，按类型筛选能快速缩小范围。</p>
+            </div>
+            <div class="step-card">
+              <span class="step-number">2</span>
+              <h4>查看截止时间与状态</h4>
+              <p>每个赛事条目都标注了当前状态：报名中、进行中、评审中或已结束。优先浏览正在进行或刚结束的赛事，作品更新更及时。</p>
+            </div>
+            <div class="step-card">
+              <span class="step-number">3</span>
+              <h4>比较评分与评审意见</h4>
+              <p>评分高的作品通常有评委点评，阅读点评可以了解评判标准。同类型作品横向对比，能快速建立自己的判断尺度。</p>
+            </div>
+            <div class="step-card">
+              <span class="step-number">4</span>
+              <h4>按兴趣延伸浏览</h4>
+              <p>从一张海报或一段代码出发，查看同一作者的其他参赛作品，或者顺藤摸瓜找到相似主题的其他赛事。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. FAQ -->
+        <section class="section" id="faq">
+          <div class="section-header">
+            <h2 class="section-title">常见问答</h2>
+          </div>
+          <div class="faq-list">
+            <details>
+              <summary>创意命题赛一般多久更新一次？</summary>
+              <div class="faq-answer">多数创意命题赛按周或双周更新，部分平台会每天发布短周期赛题。更新频率通常在赛事主页有明确标注。</div>
+            </details>
+            <details>
+              <summary>算法周赛和编程马拉松有什么区别？</summary>
+              <div class="faq-answer">算法周赛通常为 2 至 3 小时，侧重个人解题能力；编程马拉松为期 24 至 48 小时，允许组队，侧重产品完整度与团队协作。</div>
+            </details>
+            <details>
+              <summary>第一次接触设计类竞赛，从哪类赛题开始看比较好？</summary>
+              <div class="faq-answer">建议从公益海报或日常主题的平面设计赛入手，这类赛题门槛较低、作品数量多，容易找到参考样本和评审说明。</div>
+            </details>
+            <details>
+              <summary>短视频创作赛通常评判哪些维度？</summary>
+              <div class="faq-answer">常见维度包括叙事完整度、画面质量、创意切入点和主题契合度。部分赛事会额外考察声音设计或剪辑节奏。</div>
+            </details>
+            <details>
+              <summary>UI 设计挑战的参赛作品在哪里查看？</summary>
+              <div class="faq-answer">大部分赛事会在提交截止后开放作品展示页，通常按提交顺序或评分高低排列，并提供设计说明与交互原型链接。</div>
+            </details>
+            <details>
+              <summary>数据可视化竞赛需要准备什么工具？</summary>
+              <div class="faq-answer">基础工具包括 Excel 或 Google Sheets 用于数据整理，Tableau、Power BI 或 D3.js 用于图表制作。部分赛事允许使用编程语言自行绘制。</div>
+            </details>
+          </div>
+        </section>
+
+        <!-- 8. 用户评论 -->
+        <section class="section" id="comments">
+          <div class="section-header">
+            <h2 class="section-title">用户评论</h2>
+          </div>
+          <div class="comment-grid">
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">林</span><span class="comment-name">林间有风</span></div>
+              <p class="comment-text">24小时命题赛的作品《雾中信号塔》概念很完整，三张海报的视觉线索连贯，值得一看。</p>
+              <span class="comment-meta">今天 10:12</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">陈</span><span class="comment-name">陈默</span></div>
+              <p class="comment-text">算法周赛第47期的滑动窗口题出得不错，难度递进合理，最后一道题需要单调队列优化。</p>
+              <span class="comment-meta">今天 09:45</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">苏</span><span class="comment-name">苏打水</span></div>
+              <p class="comment-text">公益海报赛的银奖作品《干涸的刻度》用尺子比喻水位下降，想法很直接但执行细腻。</p>
+              <span class="comment-meta">昨天 22:30</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">周</span><span class="comment-name">周末不加班</span></div>
+              <p class="comment-text">短视频赛的一分钟限制反而让很多作品更紧凑，推荐看《早餐摊的十分钟》那条，剪辑很干净。</p>
+              <span class="comment-meta">昨天 20:05</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">何</span><span class="comment-name">何同学</span></div>
+              <p class="comment-text">UI 挑战的评分标准里无障碍占比 10% 挺合理的，很多参赛作品忽略了对比度问题。</p>
+              <span class="comment-meta">11 月 7 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">吴</span><span class="comment-name">吴聊</span></div>
+              <p class="comment-text">数据可视化那组《热浪地图》交互很流畅，时间轴拖拽没有卡顿，数据集更新后表现更好了。</p>
+              <span class="comment-meta">11 月 7 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">郑</span><span class="comment-name">郑在输入</span></div>
+              <p class="comment-text">编程马拉松的主题是公共交通数据，感觉比去年的电商主题更有现实意义，已组队报名。</p>
+              <span class="comment-meta">11 月 6 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">王</span><span class="comment-name">王一博的博</span></div>
+              <p class="comment-text">海报赛的评委点评很实在，直接指出构图重心偏移的问题，对新手很有帮助。</p>
+              <span class="comment-meta">11 月 6 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">李</span><span class="comment-name">李子树下</span></div>
+              <p class="comment-text">创意命题赛的入围作品整体水平不错，但有几组过于追求概念，完成度稍弱。</p>
+              <span class="comment-meta">11 月 5 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">赵</span><span class="comment-name">赵四</span></div>
+              <p class="comment-text">算法周赛的题目解析写得清楚，尤其是第三题的边界条件分析，补上了我的盲区。</p>
+              <span class="comment-meta">11 月 5 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">孙</span><span class="comment-name">孙悟饭</span></div>
+              <p class="comment-text">短视频赛的作品时长控制在一分钟内，反而比长视频更有冲击力，推荐《地铁口的吉他手》。</p>
+              <span class="comment-meta">11 月 4 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">刘</span><span class="comment-name">刘星雨</span></div>
+              <p class="comment-text">UI 挑战的提交作品里有一个用地图联动账单的设计，交互逻辑很顺，就是加载速度稍慢。</p>
+              <span class="comment-meta">11 月 4 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">黄</span><span class="comment-name">黄昏收集者</span></div>
+              <p class="comment-text">公益海报赛的获奖作品在色彩运用上很克制，用了大量留白，反而更突出主题。</p>
+              <span class="comment-meta">11 月 3 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">徐</span><span class="comment-name">徐来</span></div>
+              <p class="comment-text">编程马拉松组队上限四人，感觉比较合理，人太多沟通成本反而高。</p>
+              <span class="comment-meta">11 月 3 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">马</span><span class="comment-name">马甲线</span></div>
+              <p class="comment-text">数据可视化竞赛的公开数据集质量不错，字段说明完整，省去了很多清洗时间。</p>
+              <span class="comment-meta">11 月 2 日</span>
+            </div>
+            <div class="comment-card">
+              <div class="comment-user"><span class="avatar">朱</span><span class="comment-name">朱一旦</span></div>
+              <p class="comment-text">24小时命题赛的时间压力确实大，但出来的作品往往更有生命力，比长周期赛更有看头。</p>
+              <span class="comment-meta">11 月 2 日</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. 相关资讯 -->
+        <section class="section" id="news">
+          <div class="section-header">
+            <h2 class="section-title">相关资讯</h2>
+          </div>
+          <div class="news-list">
+            <article class="news-item">
+              <img class="news-img" src="https://picsum.photos/seed/daily-news01/600/400" width="600" height="400" alt="算法周赛第47期成绩页面截图" loading="lazy">
+              <div class="news-body">
+                <h3 class="news-title">算法周赛第47期成绩揭晓，冠军用时18分32秒</h3>
+                <p class="news-summary">本期共 2100 余人参与，题目难度分布均衡，冠军在最后一题使用单调队列优化通过。</p>
+                <span class="news-date">2026-11-08</span>
+              </div>
+            </article>
+            <article class="news-item">
+              <img class="news-img" src="https://picsum.photos/seed/daily-news02/600/400" width="600" height="400" alt="公益海报设计赛作品墙" loading="lazy">
+              <div class="news-body">
+                <h3 class="news-title">公益海报设计赛「无声的河流」进入公众投票阶段</h3>
+                <p class="news-summary">312 份作品开放线上投票，投票数将按 15% 权重计入最终成绩，截止 11 月 12 日。</p>
+                <span class="news-date">2026-11-08</span>
+              </div>
+            </article>
+            <article class="news-item">
+              <img class="news-img" src="https://picsum.photos/seed/daily-news03/600/400" width="600" height="400" alt="短视频创作赛拍摄现场" loading="lazy">
+              <div class="news-body">
+                <h3 class="news-title">短视频创作赛新增“一镜到底”规则，禁止剪辑拼接</h3>
+                <p class="news-summary">本期赛题要求用连续镜头记录日常，部分参赛者表示挑战较大，但作品真实感更强。</p>
+                <span class="news-date">2026-11-07</span>
+              </div>
+            </article>
+            <article class="news-item">
+              <img class="news-img" src="https://picsum.photos/seed/daily-news04/600/400" width="600" height="400" alt="编程马拉松报名页面" loading="lazy">
+              <div class="news-body">
+                <h3 class="news-title">编程马拉松「开放数据应用」报名通道开启</h3>
+                <p class="news-summary">主题为公共交通数据再利用，组队上限 4 人，报名截止 11 月 9 日，已有 120 余支队伍注册。</p>
+                <span class="news-date">2026-11-06</span>
+              </div>
+            </article>
+            <article class="news-item">
+              <img class="news-img" src="https://picsum.photos/seed/daily-news05/600/400" width="600" height="400" alt="界面设计挑战评审细则页面" loading="lazy">
+              <div class="news-body">
+                <h3 class="news-title">界面设计挑战新增无障碍评分项，权重占比10%</h3>
+                <p class="news-summary">评审细则调整后，参赛作品需额外提供色彩对比度与屏幕阅读器适配说明。</p>
+                <span class="news-date">2026-11-06</span>
+              </div>
+            </article>
+            <article class="news-item">
+              <img class="news-img" src="https://picsum.photos/seed/daily-news06/600/400" width="600" height="400" alt="数据可视化竞赛数据集更新说明" loading="lazy">
+              <div class="news-body">
+                <h3 class="news-title">数据可视化竞赛更新2025年城市气温数据集</h3>
+                <p class="news-summary">新增全年月度数据，参赛者可重新生成图表，已提交作品允许覆盖更新。</p>
+                <span class="news-date">2026-11-05</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 10. 相关推荐 -->
+        <section class="section" id="related">
+          <div class="section-header">
+            <h2 class="section-title">相关推荐</h2>
+          </div>
+          <div class="tag-index">
+            <a href="/#featured">24小时命题赛</a>
+            <a href="/#featured">滑动窗口专题</a>
+            <a href="/#featured">公益海报获奖作品</a>
+            <a href="/#featured">一镜到底短视频</a>
+            <a href="/#featured">旅行记账界面</a>
+            <a href="/#featured">热浪地图可视化</a>
+            <a href="/#featured">算法周赛题解</a>
+          </div>
+        </section>
+
+        <!-- 11. 补充板块：赛事时间线 -->
+        <section class="section" id="timeline">
+          <div class="section-header">
+            <h2 class="section-title">近期赛事时间线</h2>
+          </div>
+          <ul class="timeline">
+            <li>
+              <span class="tl-date">2026-11-08</span>
+              <span class="tl-title">算法周赛第47期成绩公布</span>
+              <span>—— 前三名成绩已公示，题目解析同步上线。</span>
+            </li>
+            <li>
+              <span class="tl-date">2026-11-09</span>
+              <span class="tl-title">编程马拉松「开放数据应用」报名截止</span>
+              <span>—— 最后一天接受组队注册，当晚公布参赛名单。</span>
+            </li>
+            <li>
+              <span class="tl-date">2026-11-10</span>
+              <span class="tl-title">短视频创作赛「一分钟日常」提交截止</span>
+              <span>—— 当日 23:59 关闭提交通道，进入评审阶段。</span>
+            </li>
+            <li>
+              <span class="tl-date">2026-11-12</span>
+              <span class="tl-title">公益海报赛公众投票结束</span>
+              <span>—— 投票通道关闭，最终成绩结合评委打分公布。</span>
+            </li>
+            <li>
+              <span class="tl-date">2026-11-14</span>
+              <span class="tl-title">界面设计挑战「旅行记账」作品展示</span>
+              <span>—— 所有提交作品开放浏览，评审同步进行。</span>
+            </li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- 右辅助栏 -->
+      <aside class="aux-sidebar">
+        <div class="aux-card">
+          <h3>热门榜单</h3>
+          <ol class="hot-list">
+            <li><span class="rank">1</span><a href="/#featured">24小时创意命题赛「城市呼吸」</a></li>
+            <li><span class="rank">2</span><a href="/#featured">算法周赛第47期</a></li>
+            <li><span class="rank">3</span><a href="/#featured">公益海报设计赛「无声的河流」</a></li>
+            <li><span class="rank">4</span><a href="/#featured">短视频创作赛「一分钟日常」</a></li>
+            <li><span class="rank">5</span><a href="/#featured">界面设计挑战「旅行记账」</a></li>
+            <li><span class="rank">6</span><a href="/#featured">数据可视化竞赛「城市温度」</a></li>
+          </ol>
+        </div>
+        <div class="aux-card">
+          <h3>更新流</h3>
+          <ul class="update-stream">
+            <li>算法周赛第47期成绩公布<span class="time">今天 09:30</span></li>
+            <li>公益海报赛作品展开启<span class="time">今天 08:15</span></li>
+            <li>短视频赛新赛题上线<span class="time">昨天 21:10</span></li>
+            <li>24小时命题赛入围名单<span class="time">昨天 18:40</span></li>
+            <li>UI 挑战新增评审维度<span class="time">11 月 6 日</span></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- 页尾 -->
+  <footer class="page-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="40" height="40" rx="10" fill="#2563EB"/>
+            <path d="M12 14L20 28L28 14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="20" cy="11" r="2.5" fill="#F59E0B"/>
+          </svg>
+          <span class="brand-text" style="font-weight:700;font-size:1.1rem;">每日大赛yandex免费在线观看</span>
+          <p>聚合每日创意赛事、编程挑战与设计竞赛的日程与作品信息，为创作者和观众提供清晰的浏览路径。</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>赛事类型</h4>
+            <a href="/#featured">创意命题赛</a>
+            <a href="/#featured">编程挑战</a>
+            <a href="/#featured">设计竞赛</a>
+            <a href="/#featured">短视频创作</a>
+          </div>
+          <div class="footer-col">
+            <h4>内容入口</h4>
+            <a href="/#latest">最新更新</a>
+            <a href="/#categories">分类入口</a>
+            <a href="/#deep-dive">深度解析</a>
+            <a href="/#faq">常见问答</a>
+          </div>
+          <div class="footer-col">
+            <h4>社区</h4>
+            <a href="/#comments">用户评论</a>
+            <a href="/#news">相关资讯</a>
+            <a href="/#timeline">赛事时间线</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 每日大赛yandex免费在线观看 · 内容聚合展示</span>
+        <span>部分内容为示例数据，仅用于展示页面结构</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // 吸顶组阴影
+      var stickyGroup = document.getElementById('stickyGroup');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 10) {
+          stickyGroup.classList.add('scrolled');
+        } else {
+          stickyGroup.classList.remove('scrolled');
+        }
+      });
+
+      // 搜索过滤（简单本地内容查找）
+      var searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          var query = e.target.value.trim().toLowerCase();
+          var cards = document.querySelectorAll('.card-item');
+          var visibleCount = 0;
+          cards.forEach(function(card) {
+            var text = card.textContent.toLowerCase();
+            var match = !query || text.indexOf(query) !== -1;
+            card.style.display = match ? '' : 'none';
+            if (match) visibleCount++;
+          });
+          var noResults = document.querySelector('.no-results');
+          if (!noResults) {
+            noResults = document.createElement('div');
+            noResults.className = 'no-results';
+            noResults.textContent = '没有找到匹配的赛事或作品，试试其他关键词。';
+            var grid = document.querySelector('.card-grid');
+            if (grid) grid.parentNode.insertBefore(noResults, grid.nextSibling);
+          }
+          noResults.style.display = (visibleCount === 0 && query) ? 'block' : 'none';
+        });
+      }
+    })();
+  </script>
+
+</body>
+            </html>
